@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Move } from '/rubik/solver/beginner/move.js';
+import { Move } from '/solver/beginner/move.js';
 
 function* enumerate (it, start = 0) { let i = start
   for (const x of it)
