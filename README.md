@@ -7,8 +7,8 @@ Used as practice for Jquery, eneded up as lesson in css. <br/>
 Sadly not responsive (but chances are you will be programming on a laptop) <br/>
 Made in mid 2023<br/>
 
-# <a href = "https://sotong1337.githhub.io/rubik/"> Rubik Cube Solver </a>
-<a href = "https://sotong1337.github.io/rubik/">https://sotong1337.github.iorubik/</a> <br/>
+# <a href = "https://sotong1337.github.io/rubik/"> Rubik Cube Solver </a>
+<a href = "https://sotong1337.github.io/rubik/">https://sotong1337.github.io/rubik/</a> <br/>
 This implementation uses 3js to solve a 3x3 Rubik's cube because I can't. <br/>
 The beginner guide explains the steps, but may contain a few redundant rotations. <br/>
 The quick solver is an implementation of Kociemba's algorithm (that I copied) that will solve the cube in almost optimal steps. <br/>
