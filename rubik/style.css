@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+body {
+	margin: 0;
+    padding: 0;
+	background-color: #000;
+	color: #fff;
+	overscroll-behavior: none;
+    overflow: hidden;
+    font-family: 'Rubik', sans-serif;
+}
+
+#action-container {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    height: 10em;
+    width: 100%;
+    bottom: 0.25em;
+    transition: all 0.3s;
+}
+
+#options {
+    display: grid;
+    grid-template-columns: 2.5em 2.5em 2.5em 5em 5em;
+    grid-template-rows: 2.5em;
+    gap: 0.25em;
+
+	position: relative;
+
+	padding: 10px;
+	box-sizing: border-box;
+	z-index: 1;
+}
+
+.blue { 
+    --color: rgb(20, 255, 250);
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+.orange {
+    --color: rgb(245, 200, 35);
+    grid-row-start: 1;
+    grid-column-start: 2;
+}
+.white {
+    --color: rgb(255, 255, 255);
+    grid-row-start: 1;
+    grid-column-start: 3;
+}
+.red {
+    --color: rgb(255, 50, 50);
+    grid-row-start: 2;
+    grid-column-start: 1;
+}
+.yellow {
+    --color: rgb(250, 245, 100);
+    grid-row-start: 2;
+    grid-column-start: 2;
+}
+.green {
+    --color: rgb(170, 250, 50);
+    grid-row-start: 2;
+    grid-column-start: 3;
+}
+
+#options button {
+    background-color: #000000;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+
+    height: 2.5em;
+    width: 2.5em;
+
+    border-radius: 0.5em;
+    border: .15em solid rgba(220, 220, 220, 0.8);
+
+    box-shadow: inset 0 0 0 .2em var(--color),
+                inset 0 0 1em .3em var(--color),
+                0 0 0 .2em var(--color),
+                0 0 1em .3em var(--color)
+}
+
+#solve-button {  
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 4;
+
+    height: 6em !important;
+    width: 5em !important;
+
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 13px;
+
+    overflow: hidden;
+}
+#solve-button p {
+    text-align: center;
+    margin: 0;
+    padding-top: calc(50% + 4px);
+    height: 100%;
+    transition: all 0.2s;
+}
+.solve-button-solve-mode .solve-mode-text {
+    transform: translateY(-6em);
+    padding-top: 5px !important;
+}
+.solve-button-solve-mode .edit-mode-text {
+    transform: translateY(6em);
+}
+
+#shuffle {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 5;
+
+    height: 6em !important;
+    width: 5em !important;
+
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 13px;
+}
+
+#options button:not(:focus):hover:enabled  {
+    animation: glow 1000ms alternate ease-in-out infinite;
+    cursor: pointer;
+    
+    opacity: 1;
+}
+
+@keyframes glow {
+    0% {
+        background-color: #000000;
+
+        border: .15em solid rgba(220, 220, 220, 0.8);
+        box-shadow: inset 0 0 0 .2em var(--color),
+                    inset 0 0 1em .3em var(--color),
+                    0 0 0 .2em var(--color),
+                    0 0 1em .3em var(--color);
+    }	
+    100% {
+        background-color: var(--color);
+        
+        border: .15em solid rgba(60, 60, 60, 0.8);
+        box-shadow: inset 0 0 0 .2em rgba(60, 60, 60, 0.8),
+                    inset 0 0 1em .3em rgba(60, 60, 60, 0.8),
+                    0 0 0 .2em rgba(60, 60, 60, 0.8),
+                    0 0 1em .3em rgba(60, 60, 60, 0.8);
+    }
+}

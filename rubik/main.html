@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Beginner Cube Visualiser</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="sidebar.css">
+    <link type="text/css" rel="stylesheet" href="solver.css">
+</head>
+<body>
+
+    <input id="menu-switch" type="checkbox" />
+    <nav id="menu">
+        <div class="title">Settings</div>            
+        <ul>
+            <li id = "li1">
+                <div class = "solver-setting-container">
+                    <button class = "solver-setting beginner-solver active-solver">Beginner</button>
+                    <button class = "solver-setting quick-solver">Quick</button>
+                </div>
+            </li>
+            <div class = "beginner-settings">
+                <li class = "toggle-container">
+                    <p>Toggle axis rotations:</p>
+                    <input class = "toggle" id="axis-toggle" type="checkbox" checked>
+                    <label class = "toggle-btn" data-tg-off="OFF" data-tg-on="ON" for="axis-toggle"></label>
+                </li>
+                <li class = "toggle-container">
+                    <p>Toggle explanation:</p>
+                    <input class = "toggle" id="explanation-toggle" type="checkbox" checked>
+                    <label class = "toggle-btn" data-tg-off="OFF" data-tg-on="ON" for="explanation-toggle"></label>
+                </li>
+            </div>
+            <div class = "quick-settings">
+                <li>
+                    <div class="btn btn-primary tooltip"><i class="fa-solid fa-circle-info"></i> 
+                        <div class="left">
+                            <h3>Max Steps</h3>
+                            <p>Program will attempt to find a solution in under X steps</p>
+                            <p>Note that it may take a long time to find a solution under 22 steps</p>
+                            <i></i>
+                        </div>
+                    </div>
+                    <p>Max Steps: </p>
+                    <span class="quick-steps">
+                        <button id="decrement">-</button>
+                        <input type="number" value="25" min="20" max="30" id="steps" />
+                        <button id="increment">+</button>
+                    </span>
+                </li>
+            </div>
+
+            <div class = "anim-speed">
+                <span class="anim-speed-setting">Animation speed: </span>
+                <input class="range-slider" type="range" value="500" min="100" max="2000"></input>
+                <span class="range-value">500ms</span>
+            </div>
+        </ul>
+    </nav>
+    <label for="menu-switch" id="menu-toggle"><i class="fa-solid fa-gear"></i></label>
+    
+    <input id="solve-switch" type="checkbox" disabled/>
+    <label for="solve-switch" id="solve-toggle"><i class="fa-solid fa-chevron-right"></i></label>
+    <nav id="solver-display">
+        
+
+        <div id = "solve-steps"><div class="title">Solver</div></div>
+
+        <div class = "anim-btn-frame">
+        <a href="#" class="anim-btn" id = "reverse-move"><i class="fas fa-backward-step"></i></a>
+        <a href="#" class="anim-btn" id = "play-all"><i class="fas fa-play"></i></a>
+        <a href="#" class="anim-btn" id = "pause"><i class="fas fa-pause"></i></a>
+        <a href="#" class="anim-btn" id = "forward-move"><i class="fas fa-forward-step"></i></a>
+        </div>
+
+        <div class = "anim-speed">
+            <span class="anim-speed-setting">Animation speed: </span>
+            <input class="range-slider" type="range" value="500" min="100" max="2000"></input>
+            <span class="range-value">500ms</span>
+        </div>  
+    </nav>
+
+    <div class="page-wrap">
+        <div class="container">
+            <div id = "scene"></div>
+            <div id = "action-container"><span id = "options">
+                <button class = "button blue"></button>
+                <button class = "button orange"></button>
+                <button class = "button white"></button>
+                <button class = "button red"></button>
+                <button class = "button yellow"></button>
+                <button class = "button green"></button>
+                <button id = "solve-button" class = "solve-button-edit-mode" disabled>
+                    <p class = "edit-mode-text">Loading Tables...</p>
+                    <p class = "solve-mode-text">Back</p>
+                </button>
+                <button id = "shuffle">Shuffle</button>
+            </span></div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+    function rangeSlide(value) {
+    for (const slider of document.getElementsByClassName('range-value')) {
+        slider.innerHTML = value + 'ms';
+    }
+}
+</script>
+
+<script type="x-shader/x-vertex" id="vertexshader">
+
+    varying vec2 vUv;
+
+    void main() {
+
+        vUv = uv;
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+    }
+
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+uniform sampler2D baseTexture;
+uniform sampler2D bloomTexture;
+
+varying vec2 vUv;
+
+void main() {
+
+    gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+
+}
+
+</script>
+
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.1/examples/jsm/"
+      }
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!--https://github.com/ldez/cubejs/tree/master-->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="/solver/kociemba/cube.js" type="text/javascript"></script>
+<script src="/solver/kociemba/solve.js" type="text/javascript"></script>
+<script src="/solver/kociemba/async.js" type="text/javascript"></script>
+
+<script type="module" src="rubik.js"></script>
