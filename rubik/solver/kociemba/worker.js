@@ -15,10 +15,9 @@
 
   solve = function(args) {
     var cube;
-    var steps;
     if (!initialized) {
       return;
-    }
+    };
     if (args.scramble) {
       cube = new KCube();
       cube.move(args.scramble);

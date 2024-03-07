@@ -1,4 +1,4 @@
-import { Move } from '/solver/beginner/move.js';
+import { Move } from 'solver/beginner/move.js';
 
 class BeginnerSolver {
     constructor (cube) {

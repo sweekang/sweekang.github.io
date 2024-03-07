@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { RoundedBoxGeometry } from '/RoundedBoxGeometry.js';
-import { RoundedPlaneGeometry } from '/RoundedPlaneGeometry.js';
+import { RoundedBoxGeometry } from 'RoundedBoxGeometry.js';
+import { RoundedPlaneGeometry } from 'RoundedPlaneGeometry.js';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -10,8 +10,8 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-import { Cube } from '/solver/beginner/cubie.js';
-import { BeginnerSolver } from '/solver/beginner/beginner_solver.js';
+import { Cube } from 'solver/beginner/cubie.js';
+import { BeginnerSolver } from 'solver/beginner/beginner_solver.js';
 
 function* enumerate (it, start = 0) { let i = start
     for (const x of it)
@@ -176,7 +176,7 @@ window.onresize = function () {
 var edges = []
 var cubies = []
 function setupScene() {
-    KCube.asyncInit( "/solver/kociemba/worker.js", function() {
+    KCube.asyncInit( "solver/kociemba/worker.js", function() {
         document.querySelector( ".edit-mode-text" ).textContent = "Solve!";
         document.querySelector( "#solve-button" ).disabled = false;
     });
