@@ -1,0 +1,121 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+#addMagnet {
+    border: 2px solid #77DD77;
+	background-color: #2d2d2d;
+	font-size: 16px;
+	height: 2.5em;
+	width: 2.5em;
+	border-radius: 999px;
+	position: absolute;
+    bottom: 15px;
+    left: 15px;
+	
+	&:after,
+	&:before {
+		content: "";
+		display: block;
+		background-color: #77DD77;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	&:before {
+		height: 1em;
+		width: 0.2em;
+	}
+
+	&:after {
+		height: 0.2em;
+		width: 1em;
+	}
+}
+
+#addMagnet:hover {
+	border: 2px solid #2d2d2d;
+	background-color: #77DD77;
+	
+	&:after,
+	&:before {
+		background-color: #2d2d2d;
+	}
+}
+
+#tempMagnet {
+    position: fixed;
+    visibility: hidden;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    left: -100px;
+    top: 50%;
+    background-color: transparent;
+    z-index: 10000;
+    border: 2px solid white;
+    height: 30px;
+    width: 30px;
+}
+
+#deleteMagnet {
+    position: absolute;
+    display: none;
+
+    font-family: "Parkinsans", monospace;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-size: 14px;
+    font-style: normal;
+    letter-spacing: 1px;
+    color: #ebebeb;
+    
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #FF6961;
+	border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #ebebeb;
+}
+
+#deleteMagnet:hover {
+	border-color: #FF6961;
+	background-color: #ebebeb;
+	color: #FF6961;
+    cursor: pointer;
+}
+
+#instructions {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    font-family: "Parkinsans", monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #ebebeb;
+
+    animation: textFade 1s infinite ease-in alternate;
+}
+
+@keyframes textFade {
+    from {opacity: 1;}
+    to {opacity: 0.5;}
+}
+
+@keyframes disappear {
+    to {opacity: 0;}
+}
