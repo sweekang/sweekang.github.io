@@ -8,5 +8,5 @@ Features include: <br/>
 <li>Adding and deleting (right-click) magnets</li>
 </ul>
 <br/>
-<a href="https://beltoforion.de/en/magnetic_pendulum/">Note: There is no need to solve for the equilibrium points of each pendulum (which is not solvable?). Instead, we integrate and estimate from current information. <br/>
+<a href="https://beltoforion.de/en/magnetic_pendulum/">Note: There is no need to solve for the equilibrium points of each pendulum (which is not solvable?). Instead, we integrate and estimate from current information. <br/> </a>
 <sub><sup><sub><sup>There is also one edge case I was too lazy to account for.</sup></sub></sup></sub> <br/>
