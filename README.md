@@ -1,6 +1,6 @@
 # Git_page
 # <a href = "https://sotong1337.github.io/gravity_basins/">Gravity Basins</a>
-<a href = "https://sotong1337.github.io/gravity_basins/">https://sotong1337.github.io/gravity_basin/</a> <br/>
+<a href = "https://sotong1337.github.io/gravity_basins/">https://sotong1337.github.io/gravity_basins/</a> <br/>
 <sub><sup>Actually magnetic pendulums, but gravity basins sounds cooler xD</sup></sub> <br/>
 Inspired from <a href="https://www.youtube.com/watch?v=LavXSS5Xtbg">this video.</a> <br/>
 Uses integration to determine end state of magnetic pendulums; produces a nice animation in the process. <br/>
