@@ -57,7 +57,7 @@ class Controls {
       const dy = pos.y - prevY;
       
       // check if dragging window or dragging magnet
-      if (hoveredMagnet) {
+      if (hoveredMagnet && !run) {
         hoveredMagnet.pos.x += dx/controls.view.zoom;
         hoveredMagnet.pos.y += dy/controls.view.zoom;
       }

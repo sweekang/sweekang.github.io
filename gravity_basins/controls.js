@@ -15,6 +15,8 @@ document.body.onkeyup = function(e) {
 
     // reset
     if (e.key == "r" || e.code == "KeyR" || e.keyCode == 82) {
+        for (let c in gui.controllersRecursive()) gui.controllersRecursive()[c].disable( run );
+
         if (reset) {
             i = 1
             for (let m of magnets) {
