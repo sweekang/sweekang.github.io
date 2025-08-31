@@ -1,4 +1,14 @@
 # Git_page
+
+# <a href = "https://sotong1337.github.io/GMVP/">Global Minimum Variance Portfolio</a>
+<a href = "https://sotong1337.github.io/GMVP/">https://sotong1337.github.io/GMVP/</a> <br/>
+Uses alpha vantage api, and quadratic programming module to calculate gmvp. <br/>
+Most of my knowledge ends at <a href = "https://drive.google.com/file/d/1ilBEjUZdJYeBxSlkexBhOBU2CaV4nkTF/view?usp=drive_link">these lecture notes</a>. <br/>
+Allows setting bounds for weights. <br/>
+Thank gemini and gpt for all the frontend. <br/>
+Completed on Aug 2025. <br/>
+<sub><sup>Not even in uni yet. Please save me</sup></sub> <br/>
+
 # <a href = "https://sotong1337.github.io/gravity_basins/">Gravity Basins</a>
 <a href = "https://sotong1337.github.io/gravity_basins/">https://sotong1337.github.io/gravity_basins/</a> <br/>
 <sub><sup>Actually magnetic pendulums, but gravity basins sounds cooler xD</sup></sub> <br/>
