@@ -1,6 +1,0 @@
-In the ABC algorithm, the swarm of bees is divided into three specialized roles: employed bees, onlookers, and scouts. Each of these roles mimics a different aspect of how bees search for and exploit food sources in nature.
-
-Employed bees: These bees are responsible for exploring known food sources, representing current solutions in the optimization problem. They assess the quality (fitness) of these sources and share the information with the rest of the hive.
-Onlooker bees: After gathering information from the employed bees, onlookers select which food sources to explore further. They base their choices on the quality of the solutions shared by the employed bees, focusing more on the better options, thus refining the search for an optimal solution.
-Scout bees: When an employed bee’s food source (solution) becomes exhausted or stagnant (when no improvement is found after a certain number of iterations), the bee becomes a scout. Scouts explore new areas of the solution space, searching for potentially unexplored food sources, thus injecting diversity into the search process.
-This dynamic allows ABC to balance the search between intensively exploring promising areas and broadly exploring new areas of the search space. This helps the algorithm avoid getting trapped in local optima and increases its chances of finding a global optimum.
