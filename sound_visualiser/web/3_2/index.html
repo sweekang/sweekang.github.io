@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js Split Frequency Visualizer</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.174.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.174.0/examples/jsm/",
+                "./audioHandler.js": "./audioHandler.js",
+                "./animation.js": "./animation.js",
+                "./sceneInitializer.js": "./sceneInitializer.js",
+                "./waveGroupManager.js": "./waveGroup.js"
+            }
+        }
+    </script>
+</head>
+<body>
+<script type="module">
+    import { init, waveGroupLow } from './sceneInitializer.js';
+    import { animate } from './animation.js';
+
+    await init();
+    animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+Episode 54 : Image Dithering with Audio Visualisation
+https://www.youtube.com/watch?v=ZPjHnvV9z9k
+
+Episode 53 : Audio Visualization in Javascript!
+https://www.youtube.com/watch?v=AQggCuH4QkM
+
+JavaScript 🎵 Audio 🎵 Visualizers
+https://www.youtube.com/watch?v=Ub70TitG6_k
+
+Basic JavaScript spectrum analyzer
+https://arie-m-prasetyo.medium.com/basic-javascript-spectrum-analyzer-96a40773152e
+
+https://www.dafx.de/paper-archive/2014/dafx14_sebastian_kraft_polyphonic_pitch_detectio.pdf
+- summary auto correlation (somehow??)
+- peak picking (?)
+    - given a set of peaks (local maxima), m1, m2, ... find suitable candidates for fundamental period
+    - loop through all peaks
+        - tolerance value, for given peak is 4+A/25 (where A is amplitude of said peak)
+        - salience value calculated (not sure for algo) with A
+
+        - loop through harmonics of that peak (integer multiples of peak), up till
+            - 
+
+
+https://www.jordipons.me/estimating-pitch-in-polyphonic-music/
+
+Adrian von dem Knesebeck, Sebastian Kraft, and Udo
+Zölzer, “Realtime System For Backing Vocal Harmonization,” in Proc. of the 14th Int. Conference on Digital Audio
+Effects, 2011.

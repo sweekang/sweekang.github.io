@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Minimum Variance Portfolio Calculator</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.6.1/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/numericjs@1.2.6/numeric-1.2.6.min.js"></script>
+
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="bg-gray-100 p-8 pt-0 pb-0 min-h-screen flex flex-col lg:flex-row gap-6 lg:gap-8 hide-scrollbar">
+
+    <section class="lg:w-2/5 p-6 pb-2 pt-0
+                    border-b lg:border-b-0 lg:border-r border-gray-300
+                    lg:max-h-[calc(100vh)] overflow-y-auto hide-scrollbar">
+
+        <h2 class="text-3xl font-extrabold text-gray-800 mt-6 mb-6 text-center lg:text-left">Portfolio Settings</h2>
+
+        <div class="mb-6">
+            <label for="api-key-input" class="block text-sm font-medium text-gray-700 mb-1"><a href="https://www.alphavantage.co/support/#api-key">Alpha Vantage API Key</a></label>
+            <input type="text" id="api-key-input" placeholder="Enter your Alpha Vantage API Key"
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            <p class="mt-1 text-sm text-gray-500">If left blank, a default API key will be used (rate limits apply).</p>
+        </div>
+
+        <div class="mb-6">
+            <label for="ticker-input" class="block text-gray-700 text-sm font-semibold mb-2">Add Asset by Ticker:</label>
+            <div class="flex items-center">
+                <input type="text" id="ticker-input" placeholder="e.g., AAPL, TSCO.LON, 000002.SHZ"
+                       class="flex-grow shadow-sm appearance-none border border-gray-300 rounded-l py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+                       aria-label="Enter stock ticker symbol">
+                <button id="add-asset-btn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out">
+                    Add
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Selected Assets:</h3>
+            <div id="selected-assets-list" class="space-y-0">
+                </div>
+        </div>
+
+        <div class="mb-8 border-b border-t border-gray-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Parameters:</h3>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Data Range for Calculation:</label>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                    <div class="flex-1">
+                        <label for="start-date-input" class="block text-xs font-medium text-gray-500 mb-1">Start Date:</label>
+                        <input type="date" id="start-date-input"
+                               class="block w-full bg-white border border-gray-300 rounded py-2 px-3 pr-8 shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                               aria-label="Select start date for data range">
+                    </div>
+                    <div class="flex-1">
+                        <label for="end-date-input" class="block text-xs font-medium text-gray-500 mb-1">End Date:</label>
+                        <input type="date" id="end-date-input"
+                               class="block w-full bg-white border border-gray-300 rounded py-2 px-3 pr-8 shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                               aria-label="Select end date for data range">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="data-frequency-select" class="block text-gray-700 text-sm font-semibold mb-2">Data Frequency:</label>
+                <select id="data-frequency-select"
+                        class="block w-full bg-white border border-gray-300 rounded py-2 px-3 pr-8 shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                        aria-label="Select data frequency">
+                    <option value="daily" selected>Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+            <div class="flex items-center mb-4">
+                <input type="checkbox" id="long-only-checkbox" class="form-checkbox h-5 w-5 text-green-600 rounded mr-2 focus:ring-green-500" checked aria-label="Long-only portfolio">
+                <label for="long-only-checkbox" class="text-gray-700 text-base font-semibold">Long-Only Portfolio (No Short Selling, weights &ge; 0)</label>
+            </div>
+        </div>
+
+        <p id="remaining-weight-info" class="text-base text-gray-600 mb-6 font-medium text-center lg:text-left"></p>
+
+        <button id="calculate-gmv-btn"
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-150 ease-in-out text-xl shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+                Calculate GMVP
+        </button>
+    </section>
+
+    <section class="flex-grow p-6 pb-2 pt-0
+                    lg:max-h-[calc(100vh)] overflow-y-auto hide-scrollbar">
+        <h2 class="text-3xl font-extrabold text-gray-800 mt-6 mb-6 text-center lg:text-left">GMVP Data</h2>
+                    
+        <div class="mb-8 bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Historical Portfolio Performance</h3>
+            <div class="chart-container relative w-full"><canvas id="historical-performance-chart"></canvas></div>
+            <p class="text-sm text-gray-500 mt-2 text-center">Click on a portfolio line to view its details.</p>
+        </div>
+
+        <div class="mb-8 bg-blue-50 p-4 rounded-lg shadow-md border border-blue-200">
+            <h3 class="text-xl font-semibold text-blue-800 mb-3">Key Metrics for Active Portfolio:</h3>
+            <p class="text-gray-800 text-lg mb-2"><span class="font-bold text-blue-700">Expected Portfolio Volatility:</span> <span id="active-volatility" class="font-mono text-lg text-blue-900">--.--%</span></p>
+            <p class="text-gray-800 text-lg"><span class="font-bold text-blue-700">Expected Portfolio Return:</span> <span id="active-return" class="font-mono text-lg text-blue-900">--.--%</span></p>
+            <p class="text-xs text-gray-600 mt-2">*(Based on historical data from the currently active portfolio)</p>
+        </div>
+
+        <div class="mb-8 bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Portfolio Weights</h2>
+            <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between">
+                <div class="chart-container relative w-3/5 p-5"><canvas id="portfolio-weights-chart"></canvas></div>
+                <div id="portfolio-weights-legend" class="w-2/5 p-3 sm:ml-3 mt-3 sm:mt-0 bg-gray-50 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Allocation:</h3>
+                    <ul class="space-y-1" id="weights-list">
+                        <li class="text-gray-600">No portfolio selected.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8 bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Detailed Data for Active Portfolio:</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg shadow-sm text-sm" id="detailed-data-table">
+                    <thead class="bg-gray-200 text-gray-700 uppercase tracking-wider">
+                        <tr>
+                            <th class="py-3 px-4 text-left font-semibold">Asset</th>
+                            <th class="py-3 px-4 text-left font-semibold">Weight</th>
+                            <th class="py-3 px-4 text-left font-semibold">Return</th>
+                            <th class="py-3 px-4 text-left font-semibold">Std Dev</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailed-data-tbody" class="divide-y divide-gray-200">
+                        <tr>
+                            <td colspan="4" class="py-4 text-center text-gray-500">
+                                Calculate a portfolio to see details here.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm mb-4">
+            <div id="covariance-matrix-container" class="mt-3">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Covariance Matrix:</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm text-sm" id="covariance-matrix-table">
+                        <thead class="bg-gray-200 text-gray-700 uppercase tracking-wider" id="covariance-matrix-thead">
+                            </thead>
+                        <tbody id="covariance-matrix-tbody" class="divide-y divide-gray-200">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <div id="correlation-matrix-container" class="mt-3">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Correlation Matrix:</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm text-sm" id="correlation-matrix-table">
+                        <thead class="bg-gray-200 text-gray-700 uppercase tracking-wider" id="correlation-matrix-thead">
+                            </thead>
+                        <tbody id="correlation-matrix-tbody" class="divide-y divide-gray-200">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script src="./js/app.js" type="module"></script>
+</body>
+</html>

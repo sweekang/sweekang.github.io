@@ -1,0 +1,49 @@
+/* THANK YOU GEMINI */
+body {
+    margin: 0; /* Remove default body margin */
+    overflow: hidden; /* Hide scrollbars */
+    background-color: #f8f8f8; /* Very light grey background */
+    display: flex; /* Use flexbox to center the number line vertically */
+    justify-content: center; /* Center horizontally (though not strictly needed for x-axis only) */
+    align-items: center; /* Center vertically */
+    min-height: 100vh; /* Make body take up full viewport height */
+}
+
+.number-line-container {
+    position: relative; /* Needed so the ball can be absolutely positioned relative to this container */
+    width: 90%; /* Make the number line take up most of the width */
+    max-width: 80vw;
+    height: 50px; /* Height of the container */
+    background-color: #fff; /* White background for the container */
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* Hide anything outside the container */
+}
+
+.number-line {
+    position: absolute; /* Position the line inside the container */
+    top: 50%; /* Vertically center the line */
+    left: 0;
+    right: 0;
+    height: 2px; /* Thickness of the line */
+    background-color: #333; /* Dark grey color for the line */
+    transform: translateY(-50%); /* Adjust vertical position to truly center */
+}
+
+
+#ball {
+    width: 30px; /* Size of the ball */
+    height: 30px; /* Size of the ball */
+    background-color: tomato; /* Ball color */
+    border-radius: 50%; /* Make it round */
+    position: absolute; /* Position relative to the .number-line-container */
+    top: 50%; /* Vertically center the ball on the line */
+    /*
+      We only need to adjust the horizontal position.
+      `left` will be set by JS.
+      `transform: translateX(-50%)` centers the ball horizontally
+      relative to its `left` position.
+    */
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    z-index: 1; /* Ensure the ball is above the line */
+}
