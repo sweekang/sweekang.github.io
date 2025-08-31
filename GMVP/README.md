@@ -124,16 +124,17 @@ $σ_A^2 = 0.00006566$<br/>
 $σ_B^2 = 0.00012794$<br/>
 $Cov(A,B) = -0.00004438$<br/>
 We obtain, $Var(R_p) = 0.4^2(0.00006566) + 0.6^2(0.00012794) + 2(0.4)(0.6)(-0.00004438) = 0.00003526$.<br/>
-Thus, $σ_p = 0.00594$ (weekly).
+Thus, $σ_p = 0.00594$ (weekly).<br/>
 
-
-Then, portfolio vairance is
-$$\begin{aligned}
-\\ &Cov(\sum_{i=1}^{n}w_{i}R_{i},\sum_{j=1}^{n}w_{j}R_{j}) &&
-\\  =&\sum_{i=1}^{n}\sum_{j=1}^{n}w_{i}w_{j}σ_{i, j} &&
-\\ =&\sum_{i=1}^{n}w_{i}^{2}σ_{i}^{2}+\sum_{i=1}^{n}\sum_{j≠i}w_{i}w_{j}σ_{i, j} && \text{as} & σ_{i,i} = σ_{i}^{2} 
-\\ =&\sum_{i=1}^{n}w_{i}^{2}σ_{i}^{2}+2\sum_{i=1}^{n}\sum_{j<i}w_{i}w_{j}σ_{i, j} && \text{as} & σ_{i,j} = σ_{j,i}
-\end{aligned}$$
+Then, portfolio variance is
+``` math
+\begin{aligned}
+&Cov(\sum_{i=1}^{n}w_{i}R_{i},\sum_{j=1}^{n}w_{j}R_{j}) \\
+=&\sum_{i=1}^{n}\sum_{j=1}^{n}w_{i}w_{j}σ_{i, j} \\
+=&\sum_{i=1}^{n}w_{i}^{2}σ_{i}^{2}+\sum_{i=1}^{n}\sum_{j \neq i}w_{i}w_{j}σ_{i, j} && \text{as} & σ_{i,i} = σ_{i}^{2} \\
+=&\sum_{i=1}^{n}w_{i}^{2}σ_{i}^{2}+2\sum_{i=1}^{n}\sum_{j \lt i}w_{i}w_{j}σ_{i, j} && \text{as} & σ_{i,j} = σ_{j,i}
+\end{aligned}
+```
 
 > **Note:**<br/>
 > From this, we can also prove that a well diversified portfolio can:<br/>
@@ -158,28 +159,47 @@ Recall that portfolio variance is $=\sum_{i=1}^{n}w_{i}^{2}σ_{i}^{2}+2\sum_{i=1
 Notice how the weights are quadratic. <br/>
 Conveniently, it is a common mathematical problem to optimize (minimize or maximize) a multivariate quadratic function subject to linear constraints on variables. <br/>
 This is known as Quadratic programming, which aims to:
-$$\begin{aligned}
-& {\text{minimize}} & & \frac{1}{2} \mathbf{w}^\top \mathbf{Q} \mathbf{w} + \mathbf{c}^\top \mathbf{w} \\
-& \text{subject to} & & \mathbf{A}^\top \mathbf{w} = \mathbf{b} \\
-& & & \mathbf{G} \mathbf{w} \leq \mathbf{h}
-\end{aligned}$$
+``` math
+\begin{aligned}
+& {\text{minimize}} & & \frac{1}{2} \mathbf{w}^\top \mathbf{Q} \mathbf{w} + \mathbf{c}^\top \mathbf{w}\\
+& \text{subject to} & & \mathbf{A}^\top \mathbf{w} = \mathbf{b}\\
+&&& \mathbf{G} \mathbf{w} \leq \mathbf{h}
+\end{aligned}
+```
 These are represented in matrices. <br/>
 
 Looking at portfolio variance in matrix representation, we are actually minimising:<br/>
-$\begin{bmatrix} w_1 & w_2 & \cdots & w_n \end{bmatrix} \begin{bmatrix} \sigma_{1,1} & \sigma_{1,2} & \cdots & \sigma_{1,n} \\ \sigma_{2,1} & \sigma_{2,2} & \cdots & \sigma_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ \sigma_{n,1} & \sigma_{n,2} & \cdots & \sigma_{n,n} \end{bmatrix} \begin{bmatrix} w_1 \\ w_2 \\ \vdots \\ w_n \end{bmatrix}$<br/><br/>
+``` math
+\begin{bmatrix} w_1 & w_2 & \cdots & w_n \end{bmatrix}
+\begin{bmatrix} \sigma_{1,1} & \sigma_{1,2} & \cdots & \sigma_{1,n} \\
+                \sigma_{2,1} & \sigma_{2,2} & \cdots & \sigma_{2,n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                \sigma_{n,1} & \sigma_{n,2} & \cdots & \sigma_{n,n} \end{bmatrix}
+\begin{bmatrix} w_1 \\ w_2 \\ \vdots \\ w_n \end{bmatrix}
+```
+<br/><br/>
 Subject to sum of weights being 1: <br/>
-$\begin{bmatrix} 1 & 1 & \cdots & 1 \end{bmatrix} \begin{bmatrix} w_1 \\ w_2 \\ \vdots \\ w_n \end{bmatrix} = 1$ <br/><br/>
+``` math
+$\begin{bmatrix} 1 & 1 & \cdots & 1 \end{bmatrix} \begin{bmatrix} w_1 \\\ w_2 \\ \vdots \\ w_n \end{bmatrix} = 1$
+```
+<br/><br/>
 And non-negativity of weights (if short-selling is disabled): <br/>
 $\mathbf{w} \geq 0$ <br/>
 
 In standard matrix notation,
-$$\begin{aligned} & {\text{minimize}} & & \frac{1}{2} \mathbf{w}^\top \mathbf{\Sigma} \mathbf{w} \\ & \text{subject to} & & \mathbf{1}^\top \mathbf{w} = 1 \\ & & & \mathbf{w} \geq 0 \end{aligned}$$
+``` math
+\begin{aligned}
+& {\text{minimize}} & & \frac{1}{2} \mathbf{w}^\top \mathbf{\Sigma} \mathbf{w} \\
+& \text{subject to} & & \mathbf{1}^\top \mathbf{w} = 1 \\
+& & & \mathbf{w} \geq 0
+\end{aligned}
+```
 Where w is a column vector of weights, and Σ is the covariance matrix. <br/><br/>
 Looks familiar? <br/>
 This is because the problem of minimum portfolio variance is in the exact form of a quadratic function! <br/>
 We simply need to plug it into a solver to get the answer. <br/>
 
-Using a solver, we need to first find the covariance matrix Σ:
+Using a solver, we need to first find the input covariance matrix Σ:
 <table border="1">
 <thead><tr><th></th><th>A</th><th>B</th><th>C</th></tr></thead>
 <tbody>
@@ -188,7 +208,7 @@ Using a solver, we need to first find the covariance matrix Σ:
 <tr><td>C</td><td>0.00002135</td><td>0.00005682</td><td>0.00009672</td></tr> 
 </tbody></table>
 
-The weights are approximately: $w_{A} = 0.52, w_{B} = 0.28, w_{C} = 0.20$ <br/>
+It then solves for the weights which are approximately: $w_{A} = 0.52, w_{B} = 0.28, w_{C} = 0.20$ <br/>
 Calculating expected returns of individual assets = [0.00723734, 0.00818518, 0.00696231], we thus get <br/>
 Portfolio expected return = $0.52(0.00724) + 0.28(0.00819) + 0.20(0.00696) = 0.00756$. <br/>
 Knowing the weights and covariance matrix, we can calculate portfolio variance = 0.0000319 <br/>
